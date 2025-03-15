@@ -27,4 +27,10 @@ async function saveCard(card) {
     cards.push(card)
 }
 
-export { getCards, saveCard }
+async function deleteCard(cardId) {
+    // Simulate an API request
+    await new Promise(resolve => setTimeout(resolve, 1000))
+    cards = cards.filter(card => card.id !== cardId)
+}
+
+export { getCards, saveCard, deleteCard }
