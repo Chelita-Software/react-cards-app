@@ -12,6 +12,9 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [cards, setCards] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [triggerReload, setTriggerReload] = useState(1)
+
+  console.log(triggerReload)
 
   useEffect(() => {
     setIsLoading(true)
@@ -19,7 +22,7 @@ function App() {
       setCards(cards)
       setIsLoading(false)
     })
-  }, [])
+  }, [triggerReload])
 
   const openCardForm = () => {
     setIsOpen(true)
@@ -50,7 +53,7 @@ function App() {
         { isLoading ? <h1>Loading...</h1> :
         cards.map(card => (
           <div className='column is-one-quarter' key={card.id}>
-            <Card cardObject={card} />
+            <Card cardObject={card} setTriggerReload={setTriggerReload}/>
           </div>
         ))
         }

@@ -1,4 +1,10 @@
-function Card({ cardObject }) {
+import { useState } from 'react'
+
+import EditCardForm from './EditCardForm'
+
+function Card({ cardObject, setTriggerReload }) {
+  const [isOpen, setIsOpen] = useState(false)
+
   return (
     <div className="card">
       <div className="card-image">
@@ -29,13 +35,14 @@ function Card({ cardObject }) {
           </div>
         </div>
         <div className="buttons">
-            <button className="button is-small">
+            <button className="button is-small" onClick={() => setIsOpen(true)}>
               Editar
             </button>
             <button className="button is-danger is-small">
               Eliminar
             </button>
-          </div>
+        </div>
+        <EditCardForm card={cardObject} isOpen={isOpen} closeController={() => setIsOpen(false)} setTriggerReload={setTriggerReload}/>
       </div>
     </div>
   );

@@ -27,10 +27,17 @@ async function saveCard(card) {
     cards.push(card)
 }
 
+async function editCard(card) {
+  // Simulate an API request
+  await new Promise(resolve => setTimeout(resolve, 1000))
+  cards = cards.map(c => c.id === card.id ? card : c)
+  console.log(cards)
+}
+
 async function deleteCard(cardId) {
     // Simulate an API request
     await new Promise(resolve => setTimeout(resolve, 1000))
     cards = cards.filter(card => card.id !== cardId)
 }
 
-export { getCards, saveCard, deleteCard }
+export { editCard, getCards, saveCard, deleteCard }
