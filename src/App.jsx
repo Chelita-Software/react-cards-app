@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import Card from './components/Card'
-import CardForm from './components/CardForm'
+import CreateCardForm from './components/CreateCardForm'
 
 import { getCards } from '../api/index.js'
 
@@ -43,7 +43,7 @@ function App() {
       <br/>
       <div className='is-flex is-justify-content-center'>
         <button className='button is-primary' onClick={openCardForm}>Crear Tarjeta</button>
-        <CardForm isOpen={isOpen} closeController={closeCardForm} />
+        <CreateCardForm isOpen={isOpen} closeController={closeCardForm} />
       </div>
       <br/>
       <div className="columns">
