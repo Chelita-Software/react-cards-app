@@ -4,7 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 import Card from './components/Card'
-import CardForm from './components/CardForm'
+import CreateCardForm from './components/CreateCardForm'
 
 import { getCards } from '../api/index.js'
 
@@ -12,6 +12,9 @@ function App() {
   const [isOpen, setIsOpen] = useState(false)
   const [cards, setCards] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [triggerReload, setTriggerReload] = useState(1)
+
+  console.log(triggerReload)
 
   useEffect(() => {
     setIsLoading(true)
@@ -19,7 +22,7 @@ function App() {
       setCards(cards)
       setIsLoading(false)
     })
-  }, [])
+  }, [triggerReload])
 
   const openCardForm = () => {
     setIsOpen(true)
@@ -43,14 +46,14 @@ function App() {
       <br/>
       <div className='is-flex is-justify-content-center'>
         <button className='button is-primary' onClick={openCardForm}>Crear Tarjeta</button>
-        <CardForm isOpen={isOpen} closeController={closeCardForm} />
+        <CreateCardForm isOpen={isOpen} closeController={closeCardForm} />
       </div>
       <br/>
       <div className="columns">
         { isLoading ? <h1>Loading...</h1> :
         cards.map(card => (
           <div className='column is-one-quarter' key={card.id}>
-            <Card cardObject={card} />
+            <Card cardObject={card} setTriggerReload={setTriggerReload}/>
           </div>
         ))
         }
