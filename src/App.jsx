@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -6,23 +6,18 @@ import './App.css'
 import Card from './components/Card'
 import CreateCardForm from './components/CreateCardForm'
 
-import { getCards } from '../api/index.js'
+import useCardsStore from '../store/index.js'
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
-  const [cards, setCards] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [triggerReload, setTriggerReload] = useState(1)
 
-  console.log(triggerReload)
+  const cards = useCardsStore(state => state.cards)
+  const fetchCards = useCardsStore(state => state.fetchCards)
 
   useEffect(() => {
-    setIsLoading(true)
-    getCards().then(cards => {
-      setCards(cards)
-      setIsLoading(false)
-    })
-  }, [triggerReload])
+    fetchCards()
+  }, [])
 
   const openCardForm = () => {
     setIsOpen(true)
@@ -53,7 +48,7 @@ function App() {
         { isLoading ? <h1>Loading...</h1> :
         cards.map(card => (
           <div className='column is-one-quarter' key={card.id}>
-            <Card cardObject={card} setTriggerReload={setTriggerReload}/>
+            <Card cardObject={card} />
           </div>
         ))
         }

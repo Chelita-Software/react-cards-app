@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-import { saveCard } from "../../api";
 import Form from "./Form";
+
+import useCardsStore from "../../store/index.js";
 
 function CreateCardForm({ isOpen, closeController }) {
   const [data, setData] = useState({
@@ -12,8 +13,9 @@ function CreateCardForm({ isOpen, closeController }) {
   });
   const [isLoading, setIsLoading] = useState(false);
 
+  const saveCard = useCardsStore((state) => state.saveCard);
+
   async function updateData(updatedData) {
-    console.log(updatedData)
     setData({ ...data, ...updatedData });
   }
 

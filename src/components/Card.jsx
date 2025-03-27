@@ -2,9 +2,13 @@ import { useState } from 'react'
 
 import EditCardForm from './EditCardForm'
 
-function Card({ cardObject, setTriggerReload }) {
+import useCardsStore from '../../store/index.js'
+
+function Card({ cardObject }) {
   const [isOpen, setIsOpen] = useState(false)
 
+  const deleteCard = useCardsStore(state => state.deleteCard)
+  
   return (
     <div className="card">
       <div className="card-image">
@@ -38,11 +42,11 @@ function Card({ cardObject, setTriggerReload }) {
             <button className="button is-small" onClick={() => setIsOpen(true)}>
               Editar
             </button>
-            <button className="button is-danger is-small">
+            <button className="button is-danger is-small" onClick={() => deleteCard(cardObject.id)}>
               Eliminar
             </button>
         </div>
-        <EditCardForm card={cardObject} isOpen={isOpen} closeController={() => setIsOpen(false)} setTriggerReload={setTriggerReload}/>
+        <EditCardForm card={cardObject} isOpen={isOpen} closeController={() => setIsOpen(false)} />
       </div>
     </div>
   );

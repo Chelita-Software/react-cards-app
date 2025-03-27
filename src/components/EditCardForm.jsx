@@ -1,11 +1,14 @@
 import { useState } from "react";
 
-import { editCard } from "../../api";
 import Form from "./Form";
 
-function EditCardForm({ card, isOpen, closeController, setTriggerReload }) {
+import useCardsStore from "../../store/index.js";
+
+function EditCardForm({ card, isOpen, closeController }) {
   const [data, setData] = useState(card);
   const [isLoading, setIsLoading] = useState(false);
+
+  const editCard = useCardsStore((state) => state.editCard);
 
   async function updateData(updatedData) {
     setData({ ...data, ...updatedData });
@@ -19,12 +22,10 @@ function EditCardForm({ card, isOpen, closeController, setTriggerReload }) {
       return;
     }
     const card = {
-      id: Math.floor(Math.random() * 1000),
       ...data,
     };
     console.log(card);
     await editCard(card);
-    setTriggerReload(Math.random());
     setIsLoading(false);
     closeController();
   }
