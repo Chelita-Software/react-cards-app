@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import EditCardForm from './EditCardForm'
+import EditCardForm from './EditCardForm.jsx'
 
 import useCardsStore from '../../store/index.js'
 
@@ -42,7 +42,16 @@ function Card({ cardObject }) {
             <button className="button is-small" onClick={() => setIsOpen(true)}>
               Editar
             </button>
-            <button className="button is-danger is-small" onClick={() => deleteCard(cardObject.id)}>
+            <button className="button is-danger is-small" onClick={
+              async () => {
+                try {
+                  await deleteCard(cardObject.id)
+                }
+                catch (error) {
+                  console.error("Error al eliminar la tarjeta:", error)
+                  alert("Error al eliminar la tarjeta")
+                }
+              }}>
               Eliminar
             </button>
         </div>

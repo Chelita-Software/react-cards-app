@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Form from "./Form";
+import Form from "./Form.jsx";
 
 import useCardsStore from "../../store/index.js";
 

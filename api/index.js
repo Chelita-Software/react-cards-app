@@ -1,43 +1,54 @@
-let cards = [
-  {
-    id: 1,
-    titulo: "Tarjeta 1",
-    descripcion: "Esta es mi tarjeta de prueba",
-    img: "https://static.nationalgeographic.es/files/styles/image_3200/public/nationalgeographic_1468962.jpg",
-    tags: ["tag1", "tag2"]
-  },
-  {
-    id: 2,
-    titulo: "Tarjeta 2",
-    descripcion: "Esta es otra tarjeta de prueba",
-    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWmgdPhex4YqK3NAm0V-9Z5lOe2UIC7YtE6_YRwhkS6CqtwwYQ82jKQncT5rX4HtTSnXw&usqp=CAU",
-    tags: ["tag1", "tag2"]
-  }
-]
-
 async function getCards() {
-    // Simulate an API request
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    const response = await fetch("http://localhost:8001/cards", {
+        method: "GET",
+    })
+    if (!response.ok) {
+        throw new Error("Error fetching cards");
+    }
+    const cards = await response.json()
     return cards
 }
 
 async function saveCard(card) {
-    // Simulate an API request
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    cards.push(card)
+    console.log(card)
+    const response = await fetch("http://localhost:8001/cards", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(card),
+    })
+    if (!response.ok) {
+        throw new Error("Error fetching cards");
+    }
+    const resp = await response.json()
+    return resp
 }
 
 async function editCard(card) {
-  // Simulate an API request
-  await new Promise(resolve => setTimeout(resolve, 1000))
-  cards = cards.map(c => c.id === card.id ? card : c)
-  console.log(cards)
+    const response = await fetch(`http://localhost:8001/cards/${card.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(card),
+    })
+    if (!response.ok) {
+        throw new Error("Error fetching cards");
+    }
+    const resp = await response.json()
+    return resp
 }
 
 async function deleteCard(cardId) {
-    // Simulate an API request
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    cards = cards.filter(card => card.id !== cardId)
+    const response = await fetch(`http://localhost:8001/cards/${cardId}`, {
+        method: "DELETE",
+    })
+    if (!response.ok) {
+        throw new Error("Error fetching cards");
+    }
+    const resp = await response.json()
+    return resp
 }
 
 export { editCard, getCards, saveCard, deleteCard }

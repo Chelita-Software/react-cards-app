@@ -3,8 +3,8 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
-import Card from './components/Card'
-import CreateCardForm from './components/CreateCardForm'
+import Card from './components/Card.jsx'
+import CreateCardForm from './components/CreateCardForm.jsx'
 
 import useCardsStore from '../store/index.js'
 
@@ -13,6 +13,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false)
 
   const cards = useCardsStore(state => state.cards)
+  const error = useCardsStore(state => state.error)
   const fetchCards = useCardsStore(state => state.fetchCards)
 
   useEffect(() => {
@@ -45,6 +46,7 @@ function App() {
       </div>
       <br/>
       <div className="columns">
+        { error && <h1 className='title has-text-centered'>{error}</h1> }
         { isLoading ? <h1>Loading...</h1> :
         cards.map(card => (
           <div className='column is-one-quarter' key={card.id}>

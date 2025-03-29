@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Form from "./Form";
+import Form from "./Form.jsx";
 
 import useCardsStore from "../../store/index.js";
 
@@ -22,7 +22,7 @@ function CreateCardForm({ isOpen, closeController }) {
   async function triggerSaveCard() {
     console.log(data)
     setIsLoading(true);
-    if (data.titulo === "" || data.descripcion === "" || data.imgUrl === "") {
+    if (data.titulo === "" || data.descripcion === "" || data.img === "") {
       alert("Por favor llena todos los campos");
       setIsLoading(false);
       return;

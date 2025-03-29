@@ -4,24 +4,25 @@ import { deleteCard, editCard, getCards, saveCard } from '../api/index.js'
 
 const useCardsStore = create((set, getState) => ({
     cards: [],
+    error: null,
     fetchCards: async () => {
-      const cards = await getCards()
-      set({cards: cards})
+      try {
+        const cards = await getCards()
+        set({cards: cards})
+      } catch (error) {
+        console.error("Error al cargar las tarjetas:", error)
+        set({error: "Error al cargar las tarjetas"})
+      }
     },
     editCard: async (card) => {
       await editCard(card)
-      set((state) => ({
-        cards: state.cards.map(c => c.id === card.id ? card : c)
-      }))
+      await getState().fetchCards()
     },
     saveCard: async (card) => {
       await saveCard(card)
-      //set((state) => ({
-      //  cards: [...state.cards, card]
-      //}))
+      await getState().fetchCards()
     },
     deleteCard: async (cardId) => {
-      console.log("Deleting")
       console.log(cardId)
       await deleteCard(cardId)
       await getState().fetchCards()
